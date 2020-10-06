@@ -44,25 +44,11 @@ echo -e "rcon.port=25575\nrcon.password=${PASSWORD}\nenable-rcon=true" > /opt/mi
 # Install Minecraft Server as service
 echo -e "[Unit]\nDescription=Minecraft Server\nAfter=network.target\n\n[Service]\nUser=minecraft\nNice=1\nKillMode=none\nSuccessExitStatus=0 1\nProtectHome=true\nProtectSystem=full\nPrivateDevices=true\nNoNewPrivileges=true\nWorkingDirectory=/opt/minecraft/server\nExecStart=/usr/bin/java -Xmx512M -Xms${RAM}G -jar paperclip.jar nogui\nExecStop=mcrcon -H 127.0.0.1 -P 25575 -p $PASSWORD stop\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/minecraft.service
 
+# Reload services daemon
 systemctl daemon-reload
 
-while true; do
-    read -p "Do you want to start your server now?" yn
-    case $yn in
-        [Yy]* ) systemctl start minecraft; echo "Server started!";;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-
-while true; do
-    read -p "Do you want to start your server automaticly after boot?" yn
-    case $yn in
-        [Yy]* ) systemctl enable minecraft; echo "Server will turn on after boot.";;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+# Run and enable minecraft service
+systemctl enable --now minecraft
 
 echo "Installation done!"
 echo "Your RCON password is:"
@@ -70,3 +56,5 @@ echo ""
 echo "$PASSWORD"
 echo ""
 echo "Don't forget to change it in server.properties!"
+echo ""
+echo "Your server is running, and will run automaticly after every boot!"
