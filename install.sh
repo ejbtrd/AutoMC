@@ -39,32 +39,10 @@ wget https://papermc.io/ci/view/all/job/Paper-1.16/lastSuccessfulBuild/artifact/
 echo "eula=true" > /opt/minecraft/server/eula.txt
 
 # Enable RCON and set random password
-echo -e 
-"rcon.port=25575\n
-rcon.password=${PASSWORD}\n
-enable-rcon=true" > /opt/minecraft/server/server.properties
+echo -e "rcon.port=25575\nrcon.password=${PASSWORD}\nenable-rcon=true" > /opt/minecraft/server/server.properties
 
 # Install Minecraft Server as service
-echo -e 
-"[Unit]\n
-Description=Minecraft Server\n
-After=network.target\n
-\n
-[Service]\n
-User=minecraft\n
-Nice=1\n
-KillMode=none\n
-SuccessExitStatus=0 1\n
-ProtectHome=true\n
-ProtectSystem=full\n
-PrivateDevices=true\n
-NoNewPrivileges=true\n
-WorkingDirectory=/opt/minecraft/server\n
-ExecStart=/usr/bin/java -Xmx512M -Xms${RAM}G -jar paperclip.jar nogui\n
-ExecStop=mcrcon -H 127.0.0.1 -P 25575 -p $PASSWORD stop\n
-\n
-[Install]\n
-WantedBy=multi-user.target" > /etc/systemd/system/minecraft.service
+echo -e "[Unit]\nDescription=Minecraft Server\nAfter=network.target\n\n[Service]\nUser=minecraft\nNice=1\nKillMode=none\nSuccessExitStatus=0 1\nProtectHome=true\nProtectSystem=full\nPrivateDevices=true\nNoNewPrivileges=true\nWorkingDirectory=/opt/minecraft/server\nExecStart=/usr/bin/java -Xmx512M -Xms${RAM}G -jar paperclip.jar nogui\nExecStop=mcrcon -H 127.0.0.1 -P 25575 -p $PASSWORD stop\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/minecraft.service
 
 systemctl daemon-reload
 
