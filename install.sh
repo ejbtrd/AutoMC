@@ -16,7 +16,7 @@ echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
 
 # Install packages
 apt update -y
-apt install git build-essential openjdk-8-jre-headless ufw
+apt install git build-essential openjdk-8-jre-headless ufw -y
 
 # Install mcrcon
 git clone https://github.com/Tiiffi/mcrcon /opt/minecraft/tools/mcrcon
