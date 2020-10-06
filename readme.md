@@ -3,14 +3,10 @@
 
 ### Usage:
 - Create user for minecraft server  
-	`sudo useradd -r -m -U -d /opt/minecraft -s /bin/bash minecraft`  
-- Switch to that user  
-	`su - minecraft`  
+	`sudo useradd -r -m -U -d /opt/minecraft -s /bin/bash minecraft`   
 - Create directories  
-	`mkdir -p ~/{tools,server}`  
+	`mkdir -p /opt/minecraft/{tools,server}`  
 - Clone this repository  
-	`git clone https://github.com/ejbtrd/AutoMC`  
-- Go to cloned directory  
-	`cd AutoMC`  
+	`git clone https://github.com/ejbtrd/AutoMC /opt/minecraft/AutoMC`    
 - Run install script  
-	`./install.sh`  
+	`/opt/minecraft/AutoMC/install.sh`  
