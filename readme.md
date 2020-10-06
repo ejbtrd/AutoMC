@@ -9,8 +9,8 @@
 - Create directories  
 	`mkdir -p ~/{tools,server}`  
 - Clone this repository  
-	`git clone https://github.com/ejbtrd/AutoMC
-- Go to cloned directory
+	`git clone https://github.com/ejbtrd/AutoMC`  
+- Go to cloned directory  
 	`cd AutoMC`  
 - Run install script  
 	`./install.sh`  
