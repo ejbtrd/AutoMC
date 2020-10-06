@@ -6,14 +6,14 @@ read $RAM
 
 # Create random RCON password
 PASSWORD=$(head /dev/urandom | tr -dc a-z0-9 | head -c 6 ; echo '')
-echo $PASSWORD > ~/server/rconpasswd.txt
+echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
 
 # Install packages
 sudo apt update -y
 sudo apt install git build-essential openjdk-8-jre-headless ufw
 
 # Install mcrcon
-git clone https://github.com/Tiiffi/mcrcon ~/tools/mcrcon
+git clone https://github.com/Tiiffi/mcrcon /opt/minecraft/tools/mcrcon
 cd tools/mcrcon
 make 
 sudo make install 
@@ -27,16 +27,16 @@ sudo ufw allow 25575/tcp
 sudo ufw enable
 
 # Download PaperMC
-sudo wget https://papermc.io/ci/view/all/job/Paper-1.16/lastSuccessfulBuild/artifact/paperclip.jar -O ~/server/paperclip.jar
+sudo wget https://papermc.io/ci/view/all/job/Paper-1.16/lastSuccessfulBuild/artifact/paperclip.jar -O /opt/minecraft/server/paperclip.jar
 
 # Accept eula
-echo "eula=true" > ~/server/eula.txt
+echo "eula=true" > /opt/minecraft/server/eula.txt
 
 # Enable RCON and set random password
 echo -e 
 "rcon.port=25575\n
 rcon.password=${PASSWORD}\n
-enable-rcon=true" > ~/server/server.properties
+enable-rcon=true" > /opt/minecraft/server/server.properties
 
 # Install Minecraft Server as service
 echo -e 
