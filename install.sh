@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if script is running as root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run this script as root."
+  exit
+fi
+
 # User variables
 echo "How much GB of RAM do you have?"
 read $RAM
@@ -9,25 +15,25 @@ PASSWORD=$(head /dev/urandom | tr -dc a-z0-9 | head -c 6 ; echo '')
 echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
 
 # Install packages
-sudo apt update -y
-sudo apt install git build-essential openjdk-8-jre-headless ufw
+apt update -y
+apt install git build-essential openjdk-8-jre-headless ufw
 
 # Install mcrcon
 git clone https://github.com/Tiiffi/mcrcon /opt/minecraft/tools/mcrcon
-cd tools/mcrcon
+cd /opt/minecraft/tools/mcrcon
 make 
-sudo make install 
-sudo mkdir /bin/mcrcon
-sudo ln -s /opt/minecraft/tools/mcrcon/mcrcon /bin/mcrcon
+make install 
+mkdir /bin/mcrcon
+ln -s /opt/minecraft/tools/mcrcon/mcrcon /bin/mcrcon
 
 # Open ports
-sudo ufw allow 22
-sudo ufw allow 25565/tcp
-sudo ufw allow 25575/tcp
-sudo ufw enable
+ufw allow 22
+ufw allow 25565/tcp
+ufw allow 25575/tcp
+ufw enable
 
 # Download PaperMC
-sudo wget https://papermc.io/ci/view/all/job/Paper-1.16/lastSuccessfulBuild/artifact/paperclip.jar -O /opt/minecraft/server/paperclip.jar
+wget https://papermc.io/ci/view/all/job/Paper-1.16/lastSuccessfulBuild/artifact/paperclip.jar -O /opt/minecraft/server/paperclip.jar
 
 # Accept eula
 echo "eula=true" > /opt/minecraft/server/eula.txt
@@ -60,23 +66,21 @@ ExecStop=mcrcon -H 127.0.0.1 -P 25575 -p $PASSWORD stop\n
 [Install]\n
 WantedBy=multi-user.target" > /etc/systemd/system/minecraft.service
 
-sudo systemctl daemon-reload
+systemctl daemon-reload
 
 while true; do
     read -p "Do you want to start your server now?" yn
     case $yn in
-        [Yy]* ) sudo systemctl start minecraft; echo "Server started!";;
+        [Yy]* ) systemctl start minecraft; echo "Server started!";;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
 done
 
-sudo systemctl enable minecraft
-
 while true; do
     read -p "Do you want to start your server automaticly after boot?" yn
     case $yn in
-        [Yy]* ) sudo systemctl enable minecraft; echo "Server will turn on after boot.";;
+        [Yy]* ) systemctl enable minecraft; echo "Server will turn on after boot.";;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
