@@ -9,13 +9,13 @@ Create directories
 	`sudo mkdir -p /opt/minecraft/{tools,server}`  
   
 Download script  
-	`wget https://raw.githubusercontent.com/ejbtrd/AutoMC/master/install.sh -O /opt/minecraft/install.sh`    
+	`sudo wget https://raw.githubusercontent.com/ejbtrd/AutoMC/master/install.sh -O /opt/minecraft/install.sh`    
   
 Make it executable  
-	`chmod +x /opt/minecraft/install.sh
+	`sudo chmod +x /opt/minecraft/install.sh`
   
 Run install script  
-	`/opt/minecraft/AutoMC/install.sh`  
+	`sudo /opt/minecraft/install.sh`  
 
 ### Control:
 

@@ -6,10 +6,6 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-# User variables
-echo "How much GB of RAM do you have?"
-read $RAM
-
 # Create random RCON password
 PASSWORD=$(head /dev/urandom | tr -dc a-z0-9 | head -c 6 ; echo '')
 echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
@@ -42,7 +38,7 @@ echo "eula=true" > /opt/minecraft/server/eula.txt
 echo -e "rcon.port=25575\nrcon.password=${PASSWORD}\nenable-rcon=true" > /opt/minecraft/server/server.properties
 
 # Install Minecraft Server as service
-echo -e "[Unit]\nDescription=Minecraft Server\nAfter=network.target\n\n[Service]\nUser=minecraft\nNice=1\nKillMode=none\nSuccessExitStatus=0 1\nProtectHome=true\nProtectSystem=full\nPrivateDevices=true\nNoNewPrivileges=true\nWorkingDirectory=/opt/minecraft/server\nExecStart=/usr/bin/java -Xmx512M -Xms${RAM}G -jar paperclip.jar nogui\nExecStop=mcrcon -H 127.0.0.1 -P 25575 -p $PASSWORD stop\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/minecraft.service
+echo -e "[Unit]\nDescription=Minecraft Server\nAfter=network.target\n\n[Service]\nUser=minecraft\nNice=1\nKillMode=none\nSuccessExitStatus=0 1\nProtectHome=true\nProtectSystem=full\nPrivateDevices=true\nNoNewPrivileges=true\nWorkingDirectory=/opt/minecraft/server\nExecStart=/usr/bin/java -Xms512M -Xmx6G -jar paperclip.jar nogui\nExecStop=mcrcon -H 127.0.0.1 -P 25575 -p $PASSWORD stop\n\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/minecraft.service
 
 # Reload services daemon
 systemctl daemon-reload
