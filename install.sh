@@ -12,7 +12,7 @@ echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
 
 # Install packages
 apt update -y
-apt install git build-essential openjdk-8-jre-headless ufw -y
+apt install git build-essential openjdk-11-jre-headless ufw -y
 
 # Create user for server
 useradd -r -m -U -d /opt/minecraft -s /bin/bash minecraft
