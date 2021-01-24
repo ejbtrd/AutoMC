@@ -17,7 +17,6 @@ apt install git build-essential openjdk-11-jre-headless ufw -y
 # Create user for server
 useradd -r -m -U -d /opt/minecraft -s /bin/bash minecraft
 mkdir -p /opt/minecraft/{tools,server}
-chown -R minecraft:minecraft /opt/minecraft
 
 # Install mcrcon
 git clone https://github.com/Tiiffi/mcrcon /opt/minecraft/tools/mcrcon
@@ -50,6 +49,8 @@ systemctl daemon-reload
 
 # Run and enable minecraft service
 systemctl enable --now minecraft
+
+chown -R minecraft:minecraft /opt/minecraft
 
 echo "Installation done!"
 echo "Your RCON password is:"
