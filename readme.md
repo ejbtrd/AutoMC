@@ -2,7 +2,7 @@
 
 # AutoMC
 
-## An automatic installer for Minecraft PaperMC server
+### An automatic installer for Minecraft Paper server
 
 </div>
 
@@ -19,17 +19,7 @@ Run install script
 
 ### Control:
 
-To start your server:  
-	`sudo systemctl start minecraft`  
-  
-To stop it:  
-	`sudo systemctl stop minecraft`  
-  
-Your server will be automaticly started every after boot, to disable it:  
-	`sudo systemctl disable minecraft`  
-  
-To re-enable it:  
-	`sudo systemctl enable minecraft` 
+You can control your server using [systemd](https://www.digitalocean.com/community/tutorials/systemd-essentials-working-with-services-units-and-the-journal).
   
 To connect to console:  
 	`rcon -p <your-password>`  
