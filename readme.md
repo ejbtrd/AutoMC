@@ -25,4 +25,3 @@ To connect to console:
 	`mcrcon -p <your-password>`  
   
 *Your password is stored in* `/opt/minecraft/server/rconpasswd.txt`
-*Don't forget to change it!*

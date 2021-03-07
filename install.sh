@@ -6,17 +6,17 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-# Create random RCON password
-PASSWORD=$(head /dev/urandom | tr -dc a-z0-9 | head -c 6 ; echo '')
-echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
-
 # Install packages
-apt update -y
-apt install git build-essential openjdk-11-jre-headless ufw -y
+apt-get -qq -y update
+apt-get -qq -y install git build-essential openjdk-11-jre-headless ufw
 
 # Create user for server
 useradd -r -m -U -d /opt/minecraft -s /bin/bash minecraft
 mkdir -p /opt/minecraft/{tools,server}
+
+# Create random RCON password
+PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+echo $PASSWORD > /opt/minecraft/server/rconpasswd.txt
 
 # Install mcrcon
 git clone https://github.com/Tiiffi/mcrcon /opt/minecraft/tools/mcrcon
@@ -57,4 +57,3 @@ echo "Your RCON password is:"
 echo ""
 echo "$PASSWORD"
 echo ""
-echo "Don't forget to change it in server.properties!"
