@@ -7,8 +7,19 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Install packages
-apt-get -qq -y update
-apt-get -qq -y install git build-essential openjdk-11-jre-headless ufw
+PACKAGES="install git build-essential openjdk-11-jre-headless ufw"
+
+if [ -f /etc/debian_version ]; then
+    echo "Detected Debian-based distribution!"
+    apt-get -qq -y update
+    apt-get -qq -y install $PACKAGES
+elif [ -f /etc/arch-release ]; then
+    echo "Detected arch linux based distribution!"
+    pacman -Syuq $PACKAGES
+else
+    echo "Cannot detect distribution!"
+    exit
+fi
 
 # Create user for server
 useradd -r -m -U -d /opt/minecraft -s /bin/bash minecraft
