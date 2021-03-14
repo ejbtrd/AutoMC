@@ -22,6 +22,6 @@ Run install script
 You can control your server using [systemd](https://www.digitalocean.com/community/tutorials/systemd-essentials-working-with-services-units-and-the-journal).
   
 To connect to console:  
-	`mcrcon -p <your-password>`  
+	`mcrcon -p $(cat /opt/minecraft/server/rconpasswd.txt)`  
   
 *Your password is stored in* `/opt/minecraft/server/rconpasswd.txt`
