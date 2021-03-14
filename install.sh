@@ -7,7 +7,7 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Install packages
-PACKAGES="install git build-essential openjdk-11-jre-headless ufw"
+PACKAGES="git build-essential openjdk-11-jre-headless ufw"
 
 if [ -f /etc/debian_version ]; then
     echo "Detected Debian-based distribution!"
